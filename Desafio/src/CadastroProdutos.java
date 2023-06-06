@@ -1,6 +1,4 @@
 class CadastroProdutos extends Venda{
-    private String vendedor;
-    private String cliente;
     private String nomeDoProduto;
     private int codigo;
     private int quantidade;
@@ -8,22 +6,12 @@ class CadastroProdutos extends Venda{
     private double valorTotal;
 
 
-    public CadastroProdutos() {
-        this.vendedor = vendedor;
-        this.cliente=cliente;
+    public CadastroProdutos(String nomeDoProduto,int codigo, int quantidade, double preco, double valorTotal) {
         this.nomeDoProduto=nomeDoProduto;
         this.codigo=codigo;
         this.quantidade=quantidade;
         this.preco=preco;
         this.valorTotal=valorTotal;
-    }
-
-    public String getVendedor() {
-        return vendedor;
-    }
-
-    public String getCliente() {
-        return cliente;
     }
 
     public String getNomeDoProduto() {
@@ -41,11 +29,20 @@ class CadastroProdutos extends Venda{
     public double getPreco() {
         return preco;
     }
-
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
     public double getValorTotal() {
-        return valorTotal;
+        return quantidade * preco;
     }
 
 
 
+    public String toString(){
+        return "Nome do produto: "+getNomeDoProduto()+
+                "Codigo: " + getCodigo()+
+                "Quantidade: "+getQuantidade()+
+                "Preço do produto: "+getPreco()+
+                "Valor total a pagar: "+getValorTotal();
+    }
 }
