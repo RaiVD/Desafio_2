@@ -3,16 +3,15 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
-    static int contCliente = 1, contVendedor = 1;
     static List<Venda> vendas = new ArrayList<>();
     static List<Produto> produtos = new ArrayList<>();
     static Map<String, Cliente> clientes = new HashMap<>();
     static Map<String, Vendedor> vendedores = new HashMap<>(2);
 
     public static void main(String[] args) {
-        Produto celular1 = new Produto("Celular1", 1233211, 2500, 1,0);
-        Produto celular2 = new Produto("Celular2", 1876211,  2799, 2,0);
-        Produto celular3 = new Produto("Celular3", 1233644,  3179, 3,0);
+        Produto celular1 = new Produto("Celular1", 1233211, 2500,0);
+        Produto celular2 = new Produto("Celular2", 1876211,  2799, 0);
+        Produto celular3 = new Produto("Celular3", 1233644,  3179, 0);
         produtos.add(celular1);
         produtos.add(celular2);
         produtos.add(celular3);
@@ -65,14 +64,13 @@ public class Main {
                     }else if (clientes.containsKey(emailCliente)) {
                         throw new IllegalArgumentException("E-mail ja cadastrado para outro cliente");
                     }
-                    System.out.println("Digite seu CPF: ");
+                    System.out.println("Digite seu CPF (apenas numeros): ");
                     String cpf = cadastro.next();
                     String cpfCliente = String.valueOf(Integer.parseInt(cpf));
                     if (clientes.containsKey(cpfCliente)) {
                         throw new IllegalArgumentException("CPF ja cadastrado para outro cliente");
                     }
-                    clientes.put(cpf, new Cliente(nomeCliente, emailCliente, cpfCliente, contCliente));
-                    contCliente += 1;
+                    clientes.put(cpf, new Cliente(nomeCliente, emailCliente, cpfCliente));
                     System.out.println("Registrado com sucesso");
                 }
                 case 2 -> {
@@ -86,14 +84,13 @@ public class Main {
                     } else if (vendedores.containsKey(emailVendedor)) {
                         throw new IllegalArgumentException("E-mail ja cadastrado para outro cliente");
                     }
-                    System.out.println("Digite seu CPF: ");
+                    System.out.println("Digite seu CPF (apenas numeros): ");
                     String cpf = cadastro.next();
                     String cpfVendedor = String.valueOf(Integer.parseInt(cpf));
                     if (vendedores.containsKey(cpfVendedor)) {
                         throw new IllegalArgumentException("CPF ja cadastrado para outro cliente");
                     }
-                    vendedores.put(emailVendedor, new Vendedor(nomeVendedor, emailVendedor, cpfVendedor, contVendedor));
-                    contVendedor += 1;
+                    vendedores.put(emailVendedor, new Vendedor(nomeVendedor, emailVendedor, cpfVendedor));
                     System.out.println("Registrado com sucesso");
                     if (vendedores.size() > 1) {
                         System.out.println("Lista de vendedores completa");
@@ -111,7 +108,7 @@ public class Main {
     public static void cadastrarVenda() {
         Scanner entrada = new Scanner(System.in);
         try {
-            System.out.println("Qual o CPF do cliente?");
+            System.out.println("Qual o CPF do cliente? (Digite apenas numeros)");
             String cpfCliente1 = entrada.next();
             if (!clientes.containsKey(cpfCliente1)) {
                 throw new IllegalArgumentException("Cliente não cadastrado");
@@ -198,7 +195,7 @@ public class Main {
                 }
             }
             case 2 -> {
-                System.out.println("Digite o CPF do cliente");
+                System.out.println("Digite o CPF do cliente (apenas numeros)");
                 String cpfCliente = consultaVendas.next();
                 for (Venda venda : vendas) {
                     Cliente clienteAux = venda.getCliente();
