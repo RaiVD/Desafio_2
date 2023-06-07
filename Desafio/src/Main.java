@@ -51,7 +51,7 @@ public class Main {
     public static void cadastrar() {
         Scanner cadastro = new Scanner(System.in);
         try {
-            System.out.print("1. Cadastrar Cliente \n2. Cadastrar Funcionario");
+            System.out.println("1. Cadastrar Cliente \n2. Cadastrar Funcionario");
             int entrada = cadastro.nextInt();
             switch (entrada) {
                 case 1 -> {
@@ -95,7 +95,7 @@ public class Main {
                     vendedores.put(emailVendedor, new Vendedor(nomeVendedor, emailVendedor, cpfVendedor, contVendedor));
                     contVendedor += 1;
                     System.out.println("Registrado com sucesso");
-                    if (vendedores.size() > 2) {
+                    if (vendedores.size() > 1) {
                         System.out.println("Lista de vendedores completa");
                     }
                 }
@@ -157,19 +157,19 @@ public class Main {
 
     public static void listar() {
         Scanner cadastro = new Scanner(System.in);
-        System.out.print("1. Lista de Funcionarios/Clientes\n2. Vendas Finalizadas");
+        System.out.println("1. Lista de Funcionarios/Clientes\n2. Vendas Finalizadas");
         int entrada1 = cadastro.nextInt();
         switch (entrada1) {
             case 1 -> {
                 System.out.println("Lista de funcionarios cadastrados: ");
-                for (Map.Entry<String, Vendedor> vendedor : vendedores.entrySet()) {
+                for (Vendedor vendedor : vendedores.values()) {
                     System.out.println(vendedor);
-                    System.out.println();
+
                 }
                 System.out.println("Lista de clientes cadastrados: ");
-                for (Map.Entry<String, Cliente> cliente : clientes.entrySet()) {
+                for (Cliente cliente : clientes.values()) {
                     System.out.println(cliente);
-                    System.out.println();
+
                 }
             }
             case 2 -> {
@@ -184,7 +184,7 @@ public class Main {
 
     public static void consultarVendas() {
         Scanner consultaVendas = new Scanner(System.in);
-        System.out.print("Consultar vendas por 1. Funcionario | 2. Cliente");
+        System.out.println("Consultar vendas por 1. Funcionario | 2. Cliente");
         int opcao = consultaVendas.nextInt();
         switch (opcao) {
             case 1 -> {
