@@ -139,6 +139,7 @@ public class Main {
             if(!produtos.contains(produtoTemporario)){
                 throw new IllegalArgumentException("Produto não cadastrado");
             }
+            System.out.println("VENDA CADASTRADA COM SUCESSO!");
 
             LocalDate data = LocalDate.now();
             Vendedor vendedor = vendedores.get(emailVendedor1);
@@ -154,7 +155,7 @@ public class Main {
 
     public static void listar() {
         Scanner cadastro = new Scanner(System.in);
-        System.out.println("1. Lista de Funcionarios/Clientes\n2. Vendas Finalizadas");
+        System.out.print("1. Lista de Funcionarios/Clientes\n2. Vendas Finalizadas");
         int entrada1 = cadastro.nextInt();
         switch (entrada1) {
             case 1 -> {
