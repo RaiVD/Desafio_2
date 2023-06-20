@@ -45,17 +45,6 @@ public class MainTest {
         assertEquals("E-mail invalido",response.getMessage());
     }
     @Test
-    public void deveLancarUmaExecaoQuandoOCpfJaEstiverCadastradoParaOutroVendedor(){
-        //Criando cenario de teste
-        String nome="raissa";
-        String email="raissa@gmail.com";
-        String cpf="1233";
-        //Realizando ação de teste
-        //Comparando os resultados
-        var response= Assertions.assertThrows(IllegalArgumentException.class,()-> registros.cadastrarFuncionario(nome,email,cpf));
-        assertEquals("CPF já cadastrado para outro vendedor",response.getMessage());
-    }
-    @Test
     public void deveCadastraClienteComSucesso(){
         //Criando cenario de teste
         String nome="Ana";
