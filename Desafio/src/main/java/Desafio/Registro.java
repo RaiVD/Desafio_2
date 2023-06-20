@@ -32,7 +32,7 @@ public class Registro {
     }
 
     public void cadastrarFuncionario(String nomeF, String emailF, String cpfF) {
-        vendedores.put("1233", new Vendedor("Raissa", "raissa@gmail.com", "1233"));
+        vendedores.put("raissa@gmail.com", new Vendedor("Raissa", "raissa@gmail.com", "1234"));
 //        try {
 
         if (!metodoUsadoParaValidarAEntradaDoEmail(emailF)) {
@@ -58,7 +58,7 @@ public class Registro {
 
     public void cadastrarCompra(String cpfC, String emailF, int quantidade, String nomeDoProduto) {
         clientes.put("1233", new Cliente("Renato", "renato@gmail.com", "1233"));
-        vendedores.put("1233", new Vendedor("Raissa", "raissa@gmail.com", "1233"));
+        vendedores.put("raissa@gmail.com", new Vendedor("Raissa", "raissa@gmail.com", "1234"));
 
         Produto celular1 = new Produto("Celular1", 1233211, 2500, 0);
         Produto celular2 = new Produto("Celular2", 1876211, 2799, 0);
