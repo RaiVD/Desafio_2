@@ -1,3 +1,5 @@
+package Desafio;
+
 import java.time.LocalDate;
 
 public class Venda {
@@ -26,8 +28,8 @@ public class Venda {
 
     @Override
     public String toString() {
-        return "O vendedor " + vendedor.getNome() +
-                " realizou uma venda para o cliente " + cliente.getNome() +
+        return "O vendedor (a) " + vendedor.getNome() +
+                " realizou uma venda para o (a) cliente " + cliente.getNome() +
                 ", do produto " + produto.getNomeDoProduto()+
                 ", no valor de "+ produto.getValorTotal()+
                 ", no dia "+getData();

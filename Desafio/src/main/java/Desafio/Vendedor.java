@@ -1,4 +1,6 @@
-class Vendedor {
+package Desafio;
+
+public class Vendedor {
 
     private String nome;
     private String email;
