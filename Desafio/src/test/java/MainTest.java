@@ -105,4 +105,16 @@ public class MainTest {
         //Comparando os resultados
         verify(registros).cadastrarCompra(cpfC,emailF,quantidadeProduto,nomeProduto);
     }
+    @Test
+    public void deveLancarUmaExecaoQuandoOVendedorNaoForCadastrado(){
+        String cpfC="1233";
+        String emailF="renato@gmail.com";
+        int quantidadeProduto = 2;
+        String nomeProduto = "Celular3";
+
+        //Realizando ação de teste
+        //Comparando os resultados
+        var response= Assertions.assertThrows(IllegalArgumentException.class,()-> registros.cadastrarCompra(cpfC,emailF,quantidadeProduto,nomeProduto));
+        assertEquals("Vendedor não cadastrado",response.getMessage());
+    }
 }
