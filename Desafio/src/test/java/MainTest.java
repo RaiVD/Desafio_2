@@ -55,10 +55,6 @@ public class MainTest {
         var response= Assertions.assertThrows(IllegalArgumentException.class,()-> registros.cadastrarFuncionario(nome,email,cpf));
         assertEquals("CPF já cadastrado para outro vendedor",response.getMessage());
     }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //Teste do metodo cadastrar cliente
     @Test
     public void deveCadastraClienteComSucesso(){
         //Criando cenario de teste
@@ -92,7 +88,6 @@ public class MainTest {
         var response= Assertions.assertThrows(IllegalArgumentException.class,()-> registros.cadastrarCliente(nome,email,cpf));
         assertEquals("CPF ja cadastrado para outro cliente",response.getMessage());
     }
-    ////////////////////////////////////////////////////////
     @Test
     public void deveCadastraProdutoComSucesso(){
         //Criando cenario de teste
@@ -128,5 +123,17 @@ public class MainTest {
         //Comparando os resultados
         var response= Assertions.assertThrows(IllegalArgumentException.class,()-> registros.cadastrarCompra(cpfC,emailF,quantidadeProduto,nomeProduto));
         assertEquals("Cliente não cadastrado",response.getMessage());
+    }
+    @Test
+    public void deveLancarUmaExecaoQuandoOProdutoNaoEstiverCadastrado(){
+        String cpfC="1233";
+        String emailF="raissa@gmail.com";
+        int quantidadeProduto = 2;
+        String nomeProduto = "Celular7";
+
+        //Realizando ação de teste
+        //Comparando os resultados
+        var response= Assertions.assertThrows(IllegalArgumentException.class,()-> registros.cadastrarCompra(cpfC,emailF,quantidadeProduto,nomeProduto));
+        assertEquals("Produto não cadastrado",response.getMessage());
     }
 }
