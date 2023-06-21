@@ -12,13 +12,9 @@ public class Main {
                 System.out.println("==============================  MENU  ==============================");
                 System.out.println("1. Cadastro de Cliente");
                 System.out.println("2. Cadastro de Funcionario");
-                System.out.println("3. Cadastrar compra");
-                System.out.println("4. Lista de Funcionarios cadastrados");
-                System.out.println("5. Lista de Clientes cadastrados");
-                System.out.println("6. Pesquisar venda por cliente");
-                System.out.println("7. Pesquisar venda por funcionario");
-                System.out.println("8. Pesquisar todas as vendas");
-                System.out.println("9. Sair");
+                System.out.println("3. Login Cliente");
+                System.out.println("4. Login Funcionario");
+                System.out.println("5. Sair");
                 System.out.println("Digite a opção desejada:");
                 int opcao = scanner.nextInt();
                 switch (opcao) {
@@ -30,8 +26,9 @@ public class Main {
                         String emailCliente = scanner.nextLine();
                         System.out.println("Digite seu CPF (apenas numeros): ");
                         String cpf = scanner.nextLine();
-                        registro.cadastrarCliente(nomeCliente, emailCliente, cpf);
-
+                        System.out.println("Crie uma senha: ");
+                        String senha = scanner.nextLine();
+                        registro.cadastrarCliente(nomeCliente, emailCliente, cpf, senha);
                     }
                     case 2 -> {
                         System.out.println("Digite seu nome: ");
@@ -41,33 +38,25 @@ public class Main {
                         String emailVendedor = scanner.next();
                         System.out.println("Digite seu CPF (apenas numeros): ");
                         String cpf = scanner.next();
-                        registro.cadastrarFuncionario(nomeVendedor,emailVendedor,cpf);
+                        System.out.println("Crie uma senha: ");
+                        String senha = scanner.nextLine();
+                        registro.cadastrarFuncionario(nomeVendedor, emailVendedor, cpf, senha);
                     }
                     case 3 -> {
-                        System.out.println("Qual o CPF do cliente? (Digite apenas numeros)");
-                        String cpfCliente1 = scanner.next();
-                        System.out.println("Qual o E-mail do funcionario?");
-                        String emailVendedor1 = scanner.next();
-                        System.out.println("Qual a quantidade do produto?");
-                        int qntProduto = scanner.nextInt();
-                        System.out.println("Qual produto deseja comprar?");
-                        String nomeProduto = scanner.next();
-                        registro.cadastrarCompra(cpfCliente1,emailVendedor1,qntProduto,nomeProduto);
+                        System.out.println("Digite seu CPF: ");
+                        String cpfLogin = scanner.next();
+                        System.out.println("Digite sua senha: ");
+                        String senhaLogin = scanner.next();
+                        registro.fazerLoginCliente(senhaLogin,cpfLogin);
                     }
-                    case 4 -> registro.listarDeFuncionarios();
-                    case 5 -> registro.listarClientes();
-                    case 6 -> {
-                        System.out.println("Digite o CPF do cliente (apenas numeros)");
-                        String cpfCliente = scanner.next();
-                        registro.consultarVendasPorCliente(cpfCliente);
+                    case 4 -> {
+                        System.out.println("Digite seu E-mail: ");
+                        String emailLogin = scanner.next();
+                        System.out.println("Digite sua senha: ");
+                        String senhaLogin = scanner.next();
+                        registro.fazerLoginFuncionario(senhaLogin,emailLogin);
                     }
-                    case 7 -> {
-                        System.out.println("Digite o email do vendedor");
-                        String emailVendedor = scanner.next();
-                        registro.consultarVendasPorFuncionario(emailVendedor);
-                    }
-                    case 8 -> registro.consultarTodasAsVendas();
-                    case 9 -> encerrar = true;
+                    case 5 -> encerrar = true;
                     default -> System.out.println("Opção inválida");
                 }
                 System.out.println();
