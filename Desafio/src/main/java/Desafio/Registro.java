@@ -8,7 +8,7 @@ public class Registro {
     static List<Venda> vendas = new ArrayList<>();
     static List<Produto> produtos = new ArrayList<>();
     static Map<String, Cliente> clientes = new HashMap<>();
-    static Map<String, Vendedor> vendedores = new HashMap<>(2);
+    public static Map<String, Vendedor> vendedores = new HashMap<>(2);
 
 
     public void cadastrarCliente(String nomeC, String emailC, String cpfC) {
@@ -17,7 +17,14 @@ public class Registro {
         if (!metodoUsadoParaValidarAEntradaDoEmail(emailC)) {
             throw new IllegalArgumentException("E-mail invalido");
         }
-        if (clientes.containsKey(emailC)) {
+        boolean encontrado = false;
+        for (Cliente produto : clientes.values()) {
+            if (produto.getEmail().equals(emailC)) {
+                encontrado = true;
+                break;
+            }
+        }
+        if (encontrado) {
             throw new IllegalArgumentException("E-mail ja cadastrado para outro cliente");
         }
         String cpfCliente = String.valueOf(Integer.parseInt(cpfC));
@@ -26,6 +33,7 @@ public class Registro {
         }
         clientes.put(cpfC, new Cliente(nomeC, emailC, cpfCliente));
         System.out.println("Registrado com sucesso");
+
 //        } catch (IllegalArgumentException exception) {
 //            System.out.println(exception.getMessage());
 //        }
@@ -39,12 +47,21 @@ public class Registro {
             throw new IllegalArgumentException("E-mail invalido");
         }
         if (vendedores.containsKey(emailF)) {
-            throw new IllegalArgumentException("E-mail ja cadastrado para outro cliente");
+            throw new IllegalArgumentException("E-mail ja cadastrado para outro funcionario");
         }
+
         String cpfVendedor = String.valueOf(Integer.parseInt(cpfF));
-        if (vendedores.containsKey(cpfVendedor)) {
-            throw new IllegalArgumentException("CPF já cadastrado para outro vendedor");
+        boolean encontrado = false;
+        for (Vendedor produto : vendedores.values()) {
+            if (produto.getCpf().equals(cpfF)) {
+                encontrado = true;
+                break;
+            }
         }
+        if (encontrado) {
+            throw new IllegalArgumentException("CPF já cadastrado para outro funcionario");
+        }
+
         vendedores.put(emailF, new Vendedor(nomeF, emailF, cpfVendedor));
         System.out.println("Registrado com sucesso");
         if (vendedores.size() > 1) {
@@ -109,7 +126,6 @@ public class Registro {
         for (Vendedor vendedor : vendedores.values()) {
             System.out.println(vendedor);
         }
-
     }
 
     public void listarClientes() {
@@ -119,38 +135,26 @@ public class Registro {
         }
     }
 
-    public static void consultarVendas() {
-        Scanner consultaVendas = new Scanner(System.in);
-        System.out.println("Consultar vendas por 1. Funcionario | 2. Cliente | 3. Listar todos");
-        int opcao = consultaVendas.nextInt();
-        switch (opcao) {
-            case 1 -> {
-                System.out.println("Digite o email do vendedor");
-                String emailVendedor = consultaVendas.next();
-                for (Venda venda : vendas) {
-                    Vendedor vendedorAux = venda.getVendedor();
-                    if (vendedorAux.getEmail().equals(emailVendedor)) {
-                        System.out.println(venda);
-                    }
-                }
-            }
-            case 2 -> {
-                System.out.println("Digite o CPF do cliente (apenas numeros)");
-                String cpfCliente = consultaVendas.next();
+    public void consultarVendasPorCliente(String cpfC) {
                 for (Venda venda : vendas) {
                     Cliente clienteAux = venda.getCliente();
-                    if (clienteAux.getCpf().equals(cpfCliente)) {
+                    if (clienteAux.getCpf().equals(cpfC)) {
                         System.out.println(venda);
                     }
                 }
+    }
+    public void consultarVendasPorFuncionario(String emailF) {
+        for (Venda venda : vendas) {
+            Vendedor vendedorAux = venda.getVendedor();
+            if (vendedorAux.getEmail().equals(emailF)) {
+                System.out.println(venda);
             }
-            case 3 -> {
-                System.out.println("Lista de vendas finalizadas");
-                for (Venda venda : vendas) {
-                    System.out.println(venda);
-                }
-            }
-            default -> System.out.println("Opção inválida");
+        }
+    }
+    public void consultarTodasAsVendas() {
+        System.out.println("Lista de vendas finalizadas");
+        for (Venda venda : vendas) {
+            System.out.println(venda);
         }
     }
 
@@ -159,9 +163,7 @@ public class Registro {
         return email.matches(regex);
     }
 
-    public static boolean verificarEmailCadastrado(String email, Map<String, Vendedor> vendedores) {
-        return vendedores.containsKey(email);
-    }
+
 
 
 }
