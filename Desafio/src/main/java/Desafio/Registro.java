@@ -6,12 +6,13 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class Registro {
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     static List<Venda> vendas = new ArrayList<>();
     static List<Produto> produtos = new ArrayList<>();
     static Map<String, Cliente> clientes = new HashMap<>();
     public static Map<String, Vendedor> vendedores = new HashMap<>(2);
+
     public void cadastrarCliente(String nomeC, String emailC, String cpfC, String senhaC) {
-        clientes.put("1233", new Cliente("Renato", "renato@gmail.com", "1233", "renato123"));
         try {
             if (!metodoUsadoParaValidarAEntradaDoEmail(emailC)) {
                 throw new IllegalArgumentException("E-mail invalido");
@@ -30,7 +31,8 @@ public class Registro {
             if (clientes.containsKey(cpfCliente)) {
                 throw new IllegalArgumentException("CPF ja cadastrado para outro cliente");
             } else {
-                clientes.put(cpfC, new Cliente(nomeC, emailC, cpfCliente, senhaC));
+                String senhaCriptografadaC = encoder.encode(senhaC);
+                clientes.put(cpfC, new Cliente(nomeC, emailC, cpfCliente, senhaCriptografadaC));
                 System.out.println("Registrado com sucesso");
             }
         } catch (IllegalArgumentException exception) {
@@ -39,7 +41,6 @@ public class Registro {
     }
 
     public void cadastrarFuncionario(String nomeF, String emailF, String cpfF, String senhaF) {
-        vendedores.put("raissa@gmail.com", new Vendedor("Raissa", "raissa@gmail.com", "1234", "raissa123"));
         try {
 
             if (!metodoUsadoParaValidarAEntradaDoEmail(emailF)) {
@@ -63,7 +64,8 @@ public class Registro {
             if (vendedores.size() > 1) {
                 System.out.println("Lista de vendedores completa");
             } else {
-                vendedores.put(emailF, new Vendedor(nomeF, emailF, cpfVendedor, senhaF));
+                String senhaCriptografadaF = encoder.encode(senhaF);
+                vendedores.put(emailF, new Vendedor(nomeF, emailF, cpfVendedor, senhaCriptografadaF));
                 System.out.println("Registrado com sucesso");
             }
         } catch (IllegalArgumentException exception) {
@@ -72,49 +74,38 @@ public class Registro {
         }
     }
 
-    public void fazerLoginCliente(String senhaLogin, String cpfLogin) {
-        clientes.put("1233", new Cliente("Renato", "renato@gmail.com", "1233", "renato123"));
+    public void fazerLoginCliente(String senhaC, String cpfLogin) {
         Scanner scanner = new Scanner(System.in);
 
-        if (!clientes.containsKey(cpfLogin)) {
-            throw new IllegalArgumentException("Cliente não cadastrado");
+        Cliente cliente = clientes.get(cpfLogin);
+        if (cliente == null || !encoder.matches(senhaC, cliente.getSenha())) {
+            throw new IllegalArgumentException("Login ou senha invalido");
         }
-
-        boolean encontrado = false;
-        for (Cliente senha : clientes.values()) {
-            if (senha.getSenha().equals(senhaLogin)) {
-                encontrado = true;
-                break;
-            }
-        }
-        if (encontrado) {
-            System.out.println("Bem - Vindo");
-
-            boolean finalizar = false;
-            while (!finalizar) {
-                System.out.println("1. Realizar Compra | 2. Listar Compras | 3. Finalizar");
-                int entrada = scanner.nextInt();
-                switch (entrada) {
-                    case 1 -> realizarCompra();
-                    case 2 -> {
-                        for (Venda venda : vendas) {
-                            Cliente clienteAux = venda.getCliente();
-                            if (clienteAux.getCpf().equals(cpfLogin)) {
-                                System.out.println(venda);
-                            }
-                            System.out.println("==============================================================================");
+        System.out.println("Bem - Vindo");
+        boolean finalizar = false;
+        while (!finalizar) {
+            System.out.println("1. Realizar Compra | 2. Listar Compras | 3. Finalizar");
+            int entrada = scanner.nextInt();
+            switch (entrada) {
+                case 1 -> realizarCompra();
+                case 2 -> {
+                    for (Venda venda : vendas) {
+                        Cliente clienteAux = venda.getCliente();
+                        if (clienteAux.getCpf().equals(cpfLogin)) {
+                            System.out.println(venda);
                         }
+                        System.out.println("==============================================================================");
                     }
-                    case 3 -> finalizar = true;
-                    default -> System.out.println("Opção invalida");
                 }
+                case 3 -> finalizar = true;
+                default -> System.out.println("Opção invalida");
             }
         }
+
     }
+
     public void realizarCompra() {
         Scanner scanner = new Scanner(System.in);
-        clientes.put("1233", new Cliente("Renato", "renato@gmail.com", "1233", "renato123"));
-        vendedores.put("raissa@gmail.com", new Vendedor("Raissa", "raissa@gmail.com", "1234", "raissa123"));
 
         Produto celular1 = new Produto("Celular1", 1233211, 2500, 0);
         Produto celular2 = new Produto("Celular2", 1876211, 2799, 0);
@@ -170,51 +161,37 @@ public class Registro {
         }
     }
 
-    public void fazerLoginFuncionario(String senhaLogin, String emailogin) {
-        vendedores.put("raissa@gmail.com", new Vendedor("Raissa", "raissa@gmail.com", "1234", "raissa123"));
+    public void fazerLoginFuncionario(String senhaF, String emailogin) {
         Scanner scanner = new Scanner(System.in);
 
-        if (!metodoUsadoParaValidarAEntradaDoEmail(emailogin)) {
-            throw new IllegalArgumentException("E-mail invalido");
+        Cliente cliente = clientes.get(emailogin);
+        if (cliente == null || !encoder.matches(senhaF, cliente.getSenha())) {
+            throw new IllegalArgumentException("Login ou senha invalido");
         }
-        if (!vendedores.containsKey(emailogin)) {
-            throw new IllegalArgumentException("E-mail não cadastrado");
-        }
-
-        boolean encontrado = false;
-        for (Vendedor produto : vendedores.values()) {
-            if (produto.getSenha().equals(senhaLogin)) {
-                encontrado = true;
-                break;
+        System.out.println("Bem - Vindo");
+        boolean finalizar = false;
+        while (!finalizar) {
+            System.out.println("1. Lista de Funcionarios cadastrados");
+            System.out.println("2. Lista de Clientes cadastrados");
+            System.out.println("3. Pesquisar venda por cliente");
+            System.out.println("4. Pesquisar venda por funcionario");
+            System.out.println("5. Pesquisar todas as vendas");
+            System.out.println("6. Finalizar");
+            int entrada = scanner.nextInt();
+            switch (entrada) {
+                case 1 -> listarDeFuncionarios();
+                case 2 -> listarClientes();
+                case 3 -> consultarVendasPorCliente();
+                case 4 -> consultarVendasPorFuncionario();
+                case 5 -> consultarTodasAsVendas();
+                case 6 -> finalizar = true;
+                default -> System.out.println("Opção invalida");
             }
         }
-        if (encontrado) {
-            System.out.println("Bem - Vindo");
 
-            boolean finalizar = false;
-            while (!finalizar) {
-                System.out.println("1. Lista de Funcionarios cadastrados");
-                System.out.println("2. Lista de Clientes cadastrados");
-                System.out.println("3. Pesquisar venda por cliente");
-                System.out.println("4. Pesquisar venda por funcionario");
-                System.out.println("5. Pesquisar todas as vendas");
-                System.out.println("6. Finalizar");
-                int entrada = scanner.nextInt();
-                switch (entrada) {
-                    case 1 -> listarDeFuncionarios();
-                    case 2 -> listarClientes();
-                    case 3 -> consultarVendasPorCliente();
-                    case 4 -> consultarVendasPorFuncionario();
-                    case 5 -> consultarTodasAsVendas();
-                    case 6 -> finalizar = true;
-                    default -> System.out.println("Opção invalida");
-                }
-            }
-        }
     }
 
     public void listarDeFuncionarios() {
-        vendedores.put("raissa@gmail.com", new Vendedor("Raissa", "raissa@gmail.com", "1234", "raissa123"));
         System.out.println("Lista de funcionarios cadastrados: ");
         for (Vendedor vendedor : vendedores.values()) {
             System.out.println(vendedor);
@@ -223,7 +200,6 @@ public class Registro {
     }
 
     public void listarClientes() {
-        clientes.put("1233", new Cliente("Renato", "renato@gmail.com", "1233", "renato123"));
         System.out.println("Lista de clientes cadastrados: ");
         for (Cliente cliente : clientes.values()) {
             System.out.println(cliente);
@@ -239,6 +215,8 @@ public class Registro {
             Cliente clienteAux = venda.getCliente();
             if (clienteAux.getCpf().equals(cpfCliente)) {
                 System.out.println(venda);
+            } else {
+                System.out.println("Nenhuma venda cadastrada");
             }
         }
         System.out.println("==============================================================================");
@@ -252,6 +230,8 @@ public class Registro {
             Vendedor vendedorAux = venda.getVendedor();
             if (vendedorAux.getEmail().equals(emailVendedor)) {
                 System.out.println(venda);
+            } else {
+                System.out.println("Nenhuma venda cadastrada");
             }
         }
         System.out.println("==============================================================================");

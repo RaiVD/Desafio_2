@@ -26,7 +26,7 @@ public class Cliente {
     }
 
     public String toString(){
-        return "\nNome do Desafio.Cliente: "+getNome()+
+        return "\nNome do Cliente: "+getNome()+
                 "\nE-mail: " + getEmail()+
                 "\nCPF: "+getCpf();
     }
