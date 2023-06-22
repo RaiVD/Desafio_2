@@ -20,11 +20,9 @@ public class Cliente {
     public String getCpf() {
         return cpf;
     }
-
     public String getSenha() {
         return senha;
     }
-
     public String toString(){
         return "\nNome do Cliente: "+getNome()+
                 "\nE-mail: " + getEmail()+

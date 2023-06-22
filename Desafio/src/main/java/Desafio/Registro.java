@@ -1,7 +1,6 @@
 package Desafio;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import java.time.LocalDate;
 import java.util.*;
 
@@ -11,7 +10,6 @@ public class Registro {
     static List<Produto> produtos = new ArrayList<>();
     static Map<String, Cliente> clientes = new HashMap<>();
     public static Map<String, Vendedor> vendedores = new HashMap<>(2);
-
     public void cadastrarCliente(String nomeC, String emailC, String cpfC, String senhaC) {
         try {
             if (!metodoUsadoParaValidarAEntradaDoEmail(emailC)) {
@@ -39,7 +37,6 @@ public class Registro {
             System.out.println(exception.getMessage());
         }
     }
-
     public void cadastrarFuncionario(String nomeF, String emailF, String cpfF, String senhaF) {
         try {
 
@@ -73,7 +70,6 @@ public class Registro {
             System.out.println();
         }
     }
-
     public void fazerLoginCliente(String senhaC, String cpfLogin) {
         Scanner scanner = new Scanner(System.in);
 
@@ -103,7 +99,6 @@ public class Registro {
         }
 
     }
-
     public void realizarCompra() {
         Scanner scanner = new Scanner(System.in);
 
@@ -160,7 +155,6 @@ public class Registro {
             System.out.println();
         }
     }
-
     public void fazerLoginFuncionario(String senhaF, String emailogin) {
         Scanner scanner = new Scanner(System.in);
 
@@ -190,7 +184,6 @@ public class Registro {
         }
 
     }
-
     public void listarDeFuncionarios() {
         System.out.println("Lista de funcionarios cadastrados: ");
         for (Vendedor vendedor : vendedores.values()) {
@@ -198,7 +191,6 @@ public class Registro {
         }
         System.out.println("==============================================================================");
     }
-
     public void listarClientes() {
         System.out.println("Lista de clientes cadastrados: ");
         for (Cliente cliente : clientes.values()) {
@@ -206,7 +198,6 @@ public class Registro {
         }
         System.out.println("==============================================================================");
     }
-
     public void consultarVendasPorCliente() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Digite o CPF do cliente (apenas numeros): ");
@@ -221,7 +212,6 @@ public class Registro {
         }
         System.out.println("==============================================================================");
     }
-
     public void consultarVendasPorFuncionario() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Digite o email do vendedor");
@@ -236,7 +226,6 @@ public class Registro {
         }
         System.out.println("==============================================================================");
     }
-
     public void consultarTodasAsVendas() {
         System.out.println("Lista de vendas finalizadas");
         for (Venda venda : vendas) {
@@ -244,11 +233,8 @@ public class Registro {
         }
         System.out.println("==============================================================================");
     }
-
     public static boolean metodoUsadoParaValidarAEntradaDoEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         return email.matches(regex);
     }
-
-
 }

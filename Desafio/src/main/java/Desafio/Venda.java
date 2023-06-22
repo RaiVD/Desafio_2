@@ -14,18 +14,15 @@ public class Venda {
         this.cliente = cliente;
         this.data = data;
     }
-
     public Vendedor getVendedor() {
         return vendedor;
     }
-
     public Cliente getCliente() {
         return cliente;
     }
     public LocalDate getData(){
         return data;
     }
-
     @Override
     public String toString() {
         return "O vendedor (a) " + vendedor.getNome() +
