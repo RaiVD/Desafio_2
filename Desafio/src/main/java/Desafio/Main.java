@@ -39,7 +39,7 @@ public class Main {
                         System.out.println("Digite seu CPF (apenas numeros): ");
                         String cpf = scanner.next();
                         System.out.println("Crie uma senha: ");
-                        String senha = scanner.nextLine();
+                        String senha = scanner.next();
                         registro.cadastrarFuncionario(nomeVendedor, emailVendedor, cpf, senha);
                     }
                     case 3 -> {

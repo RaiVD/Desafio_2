@@ -63,9 +63,7 @@ public class Registro {
             if (vendedores.size() > 1) {
                 System.out.println("Lista de vendedores completa");
             } else {
-                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                String senhaCriptografada = encoder.encode(senhaF);
-                vendedores.put(emailF, new Vendedor(nomeF, emailF, cpfVendedor, senhaCriptografada));
+                vendedores.put(emailF, new Vendedor(nomeF, emailF, cpfVendedor, senhaF));
                 System.out.println("Registrado com sucesso");
             }
         } catch (IllegalArgumentException exception) {
@@ -104,9 +102,11 @@ public class Registro {
                             if (clienteAux.getCpf().equals(cpfLogin)) {
                                 System.out.println(venda);
                             }
+                            System.out.println("==============================================================================");
                         }
                     }
                     case 3 -> finalizar = true;
+                    default -> System.out.println("Opção invalida");
                 }
             }
         }
@@ -207,6 +207,7 @@ public class Registro {
                     case 4 -> consultarVendasPorFuncionario();
                     case 5 -> consultarTodasAsVendas();
                     case 6 -> finalizar = true;
+                    default -> System.out.println("Opção invalida");
                 }
             }
         }
